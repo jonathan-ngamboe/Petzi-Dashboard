@@ -37,4 +37,18 @@ public class PetziApplication {
 					.body("Erreur lors de l'enregistrement du JSON : " + e.getMessage());
 		}
 	}
+
+	@GetMapping("/retrieve/{key}")
+	public ResponseEntity<String> getJson(@PathVariable String key) {
+		try {
+			JsonStorage storage = jsonStorageRepository.findById(key)
+					.orElseThrow(() -> new Exception("Aucune donnée trouvée avec la clé : " + key));
+
+			return ResponseEntity.ok()
+					.body(storage.getValue());
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError()
+					.body("Erreur lors de la récupération du JSON : " + e.getMessage());
+		}
+	}
 }
