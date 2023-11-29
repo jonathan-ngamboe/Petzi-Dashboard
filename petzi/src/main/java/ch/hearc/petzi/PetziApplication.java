@@ -17,6 +17,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.util.HexFormat;
 
 @SpringBootApplication
 @RestController
@@ -24,7 +25,7 @@ public class PetziApplication {
 
 	@Autowired
 	private JsonStorageRepository jsonStorageRepository;
-	private static final String SECRET_KEY = "clé_secrète_pour_HMAC";
+	private static final String SECRET_KEY = "secret";
 	private static final String petziDefaultVersion = "2";
 
 
@@ -34,6 +35,7 @@ public class PetziApplication {
 
 
 	private boolean isSignatureValid(String payload, String receivedSignatureHeader) {
+		System.out.println("Validating signature");
 		try {
 			String[] parts = receivedSignatureHeader.split(",");
 			long timestamp = Long.parseLong(parts[0].split("=")[1]);
@@ -49,11 +51,12 @@ public class PetziApplication {
 			byte[] expectedSignature = calculateHMAC(signedPayload, SECRET_KEY);
 
 			// Conversion de la signature hexadécimale reçue en tableau d'octets
-			byte[] receivedSignatureBytes = javax.xml.bind.DatatypeConverter.parseHexBinary(receivedSignature);
+			byte[] receivedSignatureBytes = HexFormat.of().parseHex(receivedSignature);
 
 			// Compare en utilisant une fonction de comparaison en temps constant
 			return MessageDigest.isEqual(expectedSignature, receivedSignatureBytes);
 		} catch (Exception e) {
+			System.out.println("Error while validating signature : " + e.getMessage());
 			return false;
 		}
 	}
@@ -66,43 +69,46 @@ public class PetziApplication {
 	}
 
 	@PostMapping("/store")
-	public ResponseEntity<String> saveJson(@PathVariable String key, @RequestBody String json, HttpServletRequest request) {
+	public ResponseEntity<String> saveJson(@RequestBody String json, HttpServletRequest request) {
+		System.out.println("Request received");
 		String petziSignature = request.getHeader("Petzi-Signature");
 		String petziVersion = request.getHeader("Petzi-Version");
 
 		// Vérifie la version
 		if (!petziDefaultVersion.equals(petziVersion)) {
-			return ResponseEntity.ok("Version non prise en charge.");
+			System.out.println("Version not supported");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Version non prise en charge.");
 		}
 
 		try {
 			// Vérifie la signature
 			if (!isSignatureValid(json, petziSignature)) {
-				// Enregistre l'erreur dans un log mais retourne une réponse 200 OK
-				return ResponseEntity.ok("Signature invalide, mais la requête a été reçue.");
-				//return ResponseEntity.status(HttpStatus.FORBIDDEN)
-				//		.body("Signature invalide.");
+				// Enregistre l'erreur dans un log et retourne une réponse 200 OK
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Signature invalide.");
 			}
+			System.out.println("Signature valid");
 
-			JsonStorage storage = new JsonStorage();
-			storage.setValue(json);
-			jsonStorageRepository.save(storage);
-			return ResponseEntity.ok()
-					.header("Petzi-Signature", petziSignature)
-					.body("JSON enregistré avec la clé : " + key);
+			try {
+				JsonStorage storage = new JsonStorage();
+				storage.setValue(json);
+				jsonStorageRepository.save(storage);
+				return ResponseEntity.ok("JSON enregistré avec succès.");
+			} catch (Exception e) {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+						.body("Erreur lors de l'enregistrement du JSON : " + e.getMessage());
+			}
 		} catch (Exception e) {
-			// Enregistre l'erreur dans un log mais retourne une réponse 200 OK
-			return ResponseEntity.ok("Erreur lors de l'enregistrement du JSON : " + e.getMessage());
-			//return ResponseEntity.internalServerError()
-			//		.body("Erreur lors de l'enregistrement du JSON : " + e.getMessage());
+			// Enregistre l'erreur dans un log et retourne une réponse 200 OK
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Erreur lors de l'enregistrement du JSON : " + e.getMessage());
 		}
 	}
 
-	@GetMapping("/retrieve/{key}")
-	public ResponseEntity<String> getJson(@PathVariable String key) {
+	@GetMapping("/retrieve/{id}")
+	public ResponseEntity<String> getJson(@PathVariable Long id) {
 		try {
-			JsonStorage storage = jsonStorageRepository.findById(key)
-					.orElseThrow(() -> new Exception("Aucune donnée trouvée avec la clé : " + key));
+			JsonStorage storage = jsonStorageRepository.findById(id)
+					.orElseThrow(() -> new Exception("Aucune donnée trouvée avec l'id: " + id));
 
 			return ResponseEntity.ok()
 					.body(storage.getValue());
