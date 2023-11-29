@@ -14,7 +14,7 @@ Petzi est un serveur Spring Boot conçu pour gérer les requêtes webhook de Pet
 
 ## Installation et Configuration
 1. **Cloner le projet** : Utilisez `git clone https://github.com/Jonathanngamboe/petzi` pour cloner le projet sur votre machine locale.
-2. **Configuration de la base de données** : Assurez-vous que le fichier `application.properties` est configuré avec les paramètres corrects pour la base de données H2.
+2. **Configuration de la base de données** : Assurez-vous que le fichier `application.properties` est configuré avec les paramètres corrects pour la base de données H2 ou laissez les paramètres par défaut.
 3. **Configurer la clé secrète** : Définissez la clé secrète utilisée pour la validation de la signature dans `PetziApplication.java`.
 
 ## Utilisation
