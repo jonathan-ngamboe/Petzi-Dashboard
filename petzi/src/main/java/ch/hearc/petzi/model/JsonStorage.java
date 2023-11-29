@@ -7,18 +7,19 @@ import jakarta.persistence.*;
 public class JsonStorage {
 
     @Id
-    private String key;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Lob
     private String value;
 
     // Getters et setters
-    public String getKey() {
-        return key;
+    public Long getId() {
+        return id;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getValue() {
