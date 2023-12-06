@@ -23,7 +23,7 @@ public class JsonRecordController {
     @Autowired
     private IJsonRecordRepository jsonRecordRepository;
 
-    private SignatureService signatureService;
+    private final SignatureService signatureService;
 
     private static final String petziDefaultVersion = "2";
 
@@ -41,24 +41,23 @@ public class JsonRecordController {
         // Vérifie la version
         if (!petziDefaultVersion.equals(petziVersion)) {
             logger.info("Version not supported");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Version non prise en charge.");
+            return new ResponseEntity<>("Version non prise en charge.", HttpStatus.BAD_REQUEST);
         }
 
         // Vérifie la signature
         if (!signatureService.isSignatureValid(json, petziSignature)) {
             logger.error("Signature invalide");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Signature invalide.");
+            return new ResponseEntity<>("Signature invalide.", HttpStatus.BAD_REQUEST);
         }
 
         try {
             JsonRecord storage = new JsonRecord();
             storage.setValue(json);
             jsonRecordRepository.save(storage);
-            return ResponseEntity.ok("JSON enregistré avec succès.");
+            return new ResponseEntity<>("JSON enregistré avec succès !", HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Erreur lors de l'enregistrement du JSON : ", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erreur lors de l'enregistrement du JSON : " + e.getMessage());
+            return new ResponseEntity<>("Erreur lors de l'enregistrement du JSON : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -69,15 +68,13 @@ public class JsonRecordController {
             JsonRecord storage = jsonRecordRepository.findById(id)
                     .orElseThrow(() -> new NoSuchElementException("Aucune donnée trouvée avec l'id: " + id));
 
-            return ResponseEntity.ok().body(storage.getValue());
+            return new ResponseEntity<>(storage.getValue(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
             logger.error("Erreur lors de la récupération du JSON : ", e);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Erreur lors de la récupération du JSON : " + e.getMessage());
+            return new ResponseEntity<>("Erreur lors de la récupération du JSON : " + e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             logger.error("Erreur interne du serveur : ", e);
-            return ResponseEntity.internalServerError()
-                    .body("Erreur interne du serveur : " + e.getMessage());
+            return new ResponseEntity<>("Erreur interne du serveur : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
