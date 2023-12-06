@@ -22,6 +22,31 @@
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 
+		<!-- Dépendance pour l'implémentation de Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- Dépendance pour l'implémentation de Kafka -->
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+
+		<!-- Dépendance pour l'implémentation de Swagger -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+
 		<!-- Spring Data JPA pour l'intégration de la base de données -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
