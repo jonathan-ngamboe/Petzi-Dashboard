@@ -8,11 +8,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SignatureService {
+    private static final Logger logger = LoggerFactory.getLogger(SignatureService.class);
     private static final String SECRET_KEY = "secret";
 
     public boolean isSignatureValid(String payload, String receivedSignatureHeader) {
-        System.out.println("Validating signature");
+        logger.info("Validating signature");
         try {
             String[] parts = receivedSignatureHeader.split(",");
             long timestamp = Long.parseLong(parts[0].split("=")[1]);
@@ -33,7 +37,7 @@ public class SignatureService {
             // Compare en utilisant une fonction de comparaison en temps constant
             return MessageDigest.isEqual(expectedSignature, receivedSignatureBytes);
         } catch (Exception e) {
-            System.out.println("Error while validating signature : " + e.getMessage());
+            logger.error("Error while validating signature : " + e.getMessage());
             return false;
         }
     }
