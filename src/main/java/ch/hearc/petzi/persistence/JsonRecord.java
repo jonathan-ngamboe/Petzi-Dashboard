@@ -1,10 +1,10 @@
-package ch.hearc.petzi.model;
+package ch.hearc.petzi.persistence;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "json_storage")
-public class JsonStorage {
+@Table(name = "json_record")
+public class JsonRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
