@@ -62,7 +62,7 @@ public class JsonRecordController {
     }
 
 
-    @GetMapping("/json/retrieve/{id}")
+    @GetMapping("/json/get/{id}")
     public ResponseEntity<String> getJson(@PathVariable Long id) {
         try {
             JsonRecord storage = jsonRecordRepository.findById(id)

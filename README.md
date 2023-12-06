@@ -24,7 +24,7 @@ Lancez le fichier PetziApplication pour démarrer le serveur
 
 ### Utiliser l'API
 - **Enregistrer JSON** : Envoyez une requête POST à `http://localhost:8080/json/save` avec un corps JSON et les en-têtes appropriés.
-- **Récupérer JSON** : Envoyez une requête GET à `http://localhost:8080/json/retrieve/{id}` pour récupérer les informations JSON enregistrées.
+- **Récupérer JSON** : Envoyez une requête GET à `http://localhost:8080/json/get/{id}` pour récupérer les informations JSON enregistrées.
 
 ## Contact
 - Dev : Jonathan Ngamboe
