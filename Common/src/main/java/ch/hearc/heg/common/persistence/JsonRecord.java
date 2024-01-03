@@ -1,4 +1,4 @@
-package ch.hearc.heg.persistence;
+package ch.hearc.heg.common.persistence;
 
 import jakarta.persistence.*;
 
