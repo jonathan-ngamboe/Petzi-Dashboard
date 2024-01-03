@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ch.hearc</groupId>
+    <artifactId>Petzi</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <java.version>21</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <spring.boot.version>2.5.0</spring.boot.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>3.2.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>PetziHook</module>
+        <module>Dashboard</module>
+        <module>RTBI</module>
+    </modules>
+
+    <description>
+        Projet Petzi - Un système de gestion d'événements en temps réel pour la plateforme Petzi. Ce projet parent inclut le Petzi Hook, qui traite et stocke les événements de vente de billets, le serveur RTBI qui fournit des analyses et des informations en temps réel, et un Dashboard pour afficher ces informations de manière interactive.
+    </description>
+</project>
