@@ -1,11 +1,10 @@
 package ch.hearc.heg.petziHook.controllers;
 
-import ch.hearc.heg.petziHook.persistence.JsonRecord;
+import ch.hearc.heg.common.persistence.JsonRecord;
 import ch.hearc.heg.petziHook.repositories.IJsonRecordRepository;
+import ch.hearc.heg.petziHook.services.KafkaMessageService;
 import ch.hearc.heg.petziHook.services.SignatureService;
 
-import ch.hearc.heg.petziHook.services.SseService;
-import ch.hearc.heg.petziHook.services.StatisticsService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -26,11 +25,9 @@ public class JsonRecordController {
     @Autowired
     private IJsonRecordRepository jsonRecordRepository;
     @Autowired
-    private SseService sseService;
-    @Autowired
-    private StatisticsService statisticsService;
-    @Autowired
     private SignatureService signatureService;
+    @Autowired
+    private KafkaMessageService kafkaMessageService;
     private static final String petziDefaultVersion = "2";
     private static final Logger logger = LoggerFactory.getLogger(JsonRecordController.class);
 
@@ -63,15 +60,11 @@ public class JsonRecordController {
         // Enregistre le JSON
         try {
             JsonRecord storage = new JsonRecord();
-            storage.setJson_value(json);
+            storage.setJsonValue(json);
             jsonRecordRepository.save(storage);
 
-            // Récupère les statistiques sur les tickets
-            String stats = statisticsService.getStats();
-
-            // Envoie une notification SSE aux clients qui écoutent
-            sseService.sendToAllClients(stats);
-            System.out.println(stats);
+            // Envoie une notification via Kafka
+            kafkaMessageService.sendMessage(json);
 
             // Retourne une réponse HTTP 200
             return new ResponseEntity<>("JSON enregistré avec succès !", HttpStatus.OK);
@@ -93,7 +86,7 @@ public class JsonRecordController {
             JsonRecord storage = jsonRecordRepository.findById(id)
                     .orElseThrow(() -> new NoSuchElementException("Aucune donnée trouvée avec l'id: " + id));
 
-            return new ResponseEntity<>(storage.getJson_value(), HttpStatus.OK);
+            return new ResponseEntity<>(storage.getJsonValue(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
             logger.error("Erreur lors de la récupération du JSON : ", e);
             return new ResponseEntity<>("Erreur lors de la récupération du JSON : " + e.getMessage(), HttpStatus.NOT_FOUND);
