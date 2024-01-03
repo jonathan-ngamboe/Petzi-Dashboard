@@ -22,9 +22,7 @@ public class JsonRecordController {
 
     @Autowired
     private IJsonRecordRepository jsonRecordRepository;
-
     private final SignatureService signatureService;
-
     private static final String petziDefaultVersion = "2";
 
     public JsonRecordController() {
@@ -34,13 +32,13 @@ public class JsonRecordController {
 
     @PostMapping("json/save")
     public ResponseEntity<String> saveJson(@RequestBody String json, HttpServletRequest request) {
-        logger.info("Request received");
+        logger.info("Requête reçue");
         String petziSignature = request.getHeader("Petzi-Signature");
         String petziVersion = request.getHeader("Petzi-Version");
 
         // Vérifie la version
         if (!petziDefaultVersion.equals(petziVersion)) {
-            logger.info("Version not supported");
+            logger.info("Version non prise en charge");
             return new ResponseEntity<>("Version non prise en charge.", HttpStatus.BAD_REQUEST);
         }
 
@@ -50,6 +48,7 @@ public class JsonRecordController {
             return new ResponseEntity<>("Signature invalide.", HttpStatus.BAD_REQUEST);
         }
 
+        // Enregistre le JSON
         try {
             JsonRecord storage = new JsonRecord();
             storage.setValue(json);
@@ -60,7 +59,6 @@ public class JsonRecordController {
             return new ResponseEntity<>("Erreur lors de l'enregistrement du JSON : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @GetMapping("/json/get/{id}")
     public ResponseEntity<String> getJson(@PathVariable Long id) {
