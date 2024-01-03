@@ -1,4 +1,4 @@
-package ch.hearc.heg.petziHook.persistence;
+package ch.hearc.heg.persistence;
 
 import jakarta.persistence.*;
 
@@ -11,7 +11,7 @@ public class JsonRecord {
     private Long id;
 
     @Lob
-    private String json_value;
+    private String jsonValue;
 
     // Getters et setters
     public Long getId() {
@@ -22,11 +22,11 @@ public class JsonRecord {
         this.id = id;
     }
 
-    public String getJson_value() {
-        return json_value;
+    public String getJsonValue() {
+        return jsonValue;
     }
 
-    public void setJson_value(String json_value) {
-        this.json_value = json_value;
+    public void setJsonValue(String jsonValue) {
+        this.jsonValue = jsonValue;
     }
 }
