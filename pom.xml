@@ -11,8 +11,8 @@
 
     <properties>
         <java.version>21</java.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <spring.boot.version>2.5.0</spring.boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -30,77 +30,6 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter</artifactId>
-			</dependency>
-
-			<!-- Dépendance pour l'implémentation de Lombok -->
-			<dependency>
-				<groupId>org.projectlombok</groupId>
-				<artifactId>lombok</artifactId>
-				<optional>true</optional>
-			</dependency>
-
-			<!-- Dépendance pour l'implémentation de Kafka -->
-			<dependency>
-				<groupId>org.springframework.kafka</groupId>
-				<artifactId>spring-kafka-test</artifactId>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.kafka</groupId>
-				<artifactId>spring-kafka</artifactId>
-			</dependency>
-
-			<!-- Dépendance pour l'implémentation de Swagger -->
-			<dependency>
-				<groupId>org.springdoc</groupId>
-				<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-				<version>2.0.2</version>
-			</dependency>
-
-			<!-- Spring Data JPA pour l'intégration de la base de données -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-data-jpa</artifactId>
-			</dependency>
-
-			<!-- H2 Database Engine -->
-			<dependency>
-				<groupId>com.h2database</groupId>
-				<artifactId>h2</artifactId>
-				<version>1.4.200</version>
-				<scope>runtime</scope>
-			</dependency>
-
-			<!-- Dépendance JAXB pour DatatypeConverter -->
-			<dependency>
-				<groupId>javax.xml.bind</groupId>
-				<artifactId>jaxb-api</artifactId>
-				<version>2.3.1</version>
-			</dependency>
-
-			<!-- Dépendance pour l'implémentation JAXB -->
-			<dependency>
-				<groupId>org.glassfish.jaxb</groupId>
-				<artifactId>jaxb-runtime</artifactId>
-				<version>2.3.1</version>
-			</dependency>
-
-			<dependency>
-				<groupId>jakarta.servlet</groupId>
-				<artifactId>jakarta.servlet-api</artifactId>
-				<version>5.0.0</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-test</artifactId>
-				<scope>test</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-web</artifactId>
 			</dependency>
 		</dependencies>
     </dependencyManagement>

@@ -8,12 +8,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="PetziHook" />
+        <module name="Dashboard" />
+        <module name="RTBI" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Dashboard" target="11" />
-      <module name="PetziHook" target="11" />
-      <module name="RTBI" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,4 +1,4 @@
-package ch.hearc.petzi.services;
+package ch.hearc.heg.petziHook.services;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;

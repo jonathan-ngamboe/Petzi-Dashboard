@@ -1,4 +1,4 @@
-package ch.hearc;
+package ch.hearc.heg.dashboard;
 
 public class Main {
     public static void main(String[] args) {

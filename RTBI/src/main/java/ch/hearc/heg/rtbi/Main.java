@@ -1,4 +1,4 @@
-package org.example;
+package ch.hearc.heg.rtbi;
 
 public class Main {
     public static void main(String[] args) {

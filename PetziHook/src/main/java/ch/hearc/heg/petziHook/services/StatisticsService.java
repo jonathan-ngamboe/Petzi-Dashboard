@@ -1,7 +1,7 @@
-package ch.hearc.petzi.services;
+package ch.hearc.heg.petziHook.services;
 
-import ch.hearc.petzi.persistence.JsonRecord;
-import ch.hearc.petzi.repositories.IJsonRecordRepository;
+import ch.hearc.heg.petziHook.persistence.JsonRecord;
+import ch.hearc.heg.petziHook.repositories.IJsonRecordRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class StatisticsService {
 
         for (JsonRecord record : records) {
             // Désérialisation du JSON en objet Java
-            Map<String, Object> root = objectMapper.readValue(record.getValue(), Map.class);
+            Map<String, Object> root = objectMapper.readValue(record.getJson_value(), Map.class);
             Map<String, Object> details = (Map<String, Object>) root.get("details");
             Map<String, Object> ticket = (Map<String, Object>) details.get("ticket");
             Map<String, Object> price = (Map<String, Object>) ticket.get("price");

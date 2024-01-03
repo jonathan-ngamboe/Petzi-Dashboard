@@ -1,4 +1,4 @@
-package ch.hearc.petzi.services;
+package ch.hearc.heg.petziHook.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

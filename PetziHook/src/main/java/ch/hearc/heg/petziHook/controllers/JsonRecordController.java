@@ -1,11 +1,11 @@
-package ch.hearc.petzi.controllers;
+package ch.hearc.heg.petziHook.controllers;
 
-import ch.hearc.petzi.persistence.JsonRecord;
-import ch.hearc.petzi.repositories.IJsonRecordRepository;
-import ch.hearc.petzi.services.SignatureService;
+import ch.hearc.heg.petziHook.persistence.JsonRecord;
+import ch.hearc.heg.petziHook.repositories.IJsonRecordRepository;
+import ch.hearc.heg.petziHook.services.SignatureService;
 
-import ch.hearc.petzi.services.SseService;
-import ch.hearc.petzi.services.StatisticsService ;
+import ch.hearc.heg.petziHook.services.SseService;
+import ch.hearc.heg.petziHook.services.StatisticsService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -63,7 +63,7 @@ public class JsonRecordController {
         // Enregistre le JSON
         try {
             JsonRecord storage = new JsonRecord();
-            storage.setValue(json);
+            storage.setJson_value(json);
             jsonRecordRepository.save(storage);
 
             // Récupère les statistiques sur les tickets
@@ -93,7 +93,7 @@ public class JsonRecordController {
             JsonRecord storage = jsonRecordRepository.findById(id)
                     .orElseThrow(() -> new NoSuchElementException("Aucune donnée trouvée avec l'id: " + id));
 
-            return new ResponseEntity<>(storage.getValue(), HttpStatus.OK);
+            return new ResponseEntity<>(storage.getJson_value(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
             logger.error("Erreur lors de la récupération du JSON : ", e);
             return new ResponseEntity<>("Erreur lors de la récupération du JSON : " + e.getMessage(), HttpStatus.NOT_FOUND);

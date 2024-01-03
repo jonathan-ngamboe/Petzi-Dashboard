@@ -1,6 +1,6 @@
-package ch.hearc.petzi.controllers;
+package ch.hearc.heg.petziHook.controllers;
 
-import ch.hearc.petzi.services.SseService;
+import ch.hearc.heg.petziHook.services.SseService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
