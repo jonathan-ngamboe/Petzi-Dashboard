@@ -4,6 +4,8 @@ import ch.hearc.petzi.persistence.JsonRecord;
 import ch.hearc.petzi.repositories.IJsonRecordRepository;
 import ch.hearc.petzi.services.SignatureService;
 
+import ch.hearc.petzi.services.SseService;
+import ch.hearc.petzi.services.StatisticsService ;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -15,21 +17,31 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
+/**
+ * Contrôleur REST pour gérer les requêtes liées aux enregistrements JSON (Tickets).
+ */
 @RestController
 public class JsonRecordController {
 
-    private static final Logger logger = LoggerFactory.getLogger(JsonRecordController.class);
-
     @Autowired
     private IJsonRecordRepository jsonRecordRepository;
-    private final SignatureService signatureService;
+    @Autowired
+    private SseService sseService;
+    @Autowired
+    private StatisticsService statisticsService;
+    @Autowired
+    private SignatureService signatureService;
     private static final String petziDefaultVersion = "2";
-
-    public JsonRecordController() {
-        this.signatureService = new SignatureService();
-    }
+    private static final Logger logger = LoggerFactory.getLogger(JsonRecordController.class);
 
 
+    /**
+     * Traite les requêtes POST pour enregistrer des données JSON et envoyer des notifications SSE.
+     *
+     * @param json le contenu JSON à enregistrer.
+     * @param request la requête HTTP contenant les en-têtes et autres informations.
+     * @return un ResponseEntity représentant le résultat de l'opération.
+     */
     @PostMapping("json/save")
     public ResponseEntity<String> saveJson(@RequestBody String json, HttpServletRequest request) {
         logger.info("Requête reçue");
@@ -53,13 +65,28 @@ public class JsonRecordController {
             JsonRecord storage = new JsonRecord();
             storage.setValue(json);
             jsonRecordRepository.save(storage);
+
+            // Récupère les statistiques sur les tickets
+            String stats = statisticsService.getStats();
+
+            // Envoie une notification SSE aux clients qui écoutent
+            sseService.sendToAllClients(stats);
+            System.out.println(stats);
+
+            // Retourne une réponse HTTP 200
             return new ResponseEntity<>("JSON enregistré avec succès !", HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Erreur lors de l'enregistrement du JSON : ", e);
-            return new ResponseEntity<>("Erreur lors de l'enregistrement du JSON : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            logger.error("Erreur lors de l'enregistrement du JSON et de l'envoi de la notification SSE : ", e);
+            return new ResponseEntity<>("Erreur lors de l'enregistrement du JSON et de l'envoi de la notification SSE : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     * Traite les requêtes GET pour récupérer des données JSON enregistrées par leur identifiant.
+     *
+     * @param id l'identifiant de l'enregistrement JSON à récupérer.
+     * @return un ResponseEntity contenant le JSON ou un message d'erreur.
+     */
     @GetMapping("/json/get/{id}")
     public ResponseEntity<String> getJson(@PathVariable Long id) {
         try {
