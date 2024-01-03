@@ -1,4 +1,4 @@
-package ch.hearc.heg.petziHook.services;
+package ch.hearc.heg.rtbi.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +48,10 @@ public class SseService {
      * @param data Les données à envoyer aux clients.
      */
     public void sendToAllClients(Object data) {
+        if(clients.isEmpty()) {
+            logger.info("Aucun client SSE connecté.");
+            return;
+        }
         synchronized (clients) {
             Set<SseEmitter> clientsToRemove = new HashSet<>();
             for (SseEmitter client : clients) {

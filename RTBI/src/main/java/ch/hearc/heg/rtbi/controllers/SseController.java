@@ -1,7 +1,6 @@
-package ch.hearc.heg.petziHook.controllers;
+package ch.hearc.heg.rtbi.controllers;
 
-import ch.hearc.heg.petziHook.services.SseService;
-
+import ch.hearc.heg.rtbi.services.SseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
