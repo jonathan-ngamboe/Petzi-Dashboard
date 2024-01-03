@@ -1,12 +1,13 @@
 # Projet Petzi
 
 ## Description
-Petzi est un serveur Spring Boot conçu pour gérer les requêtes webhook de Petzi. Il offre des fonctionnalités pour enregistrer et récupérer des informations JSON.
+Petzi est un serveur Spring Boot conçu pour gérer les requêtes webhook de Petzi. Il offre des fonctionnalités pour enregistrer, récupérer et notifier en temps réel des informations JSON.
 
 ## Fonctionnalités
 - Réception et traitement des requêtes webhook avec validation de signature.
 - Stockage des données JSON reçues dans une base de données H2.
 - Récupération des données JSON via une API REST.
+- Notification en temps réel des clients via Server-Sent Events (SSE) lors de l'enregistrement de nouveaux JSON.
 
 ## Prérequis
 - Java JDK 11 ou supérieur.
@@ -19,12 +20,12 @@ Petzi est un serveur Spring Boot conçu pour gérer les requêtes webhook de Pet
 
 ## Utilisation
 ### Démarrer le serveur
-Lancez le fichier PetziApplication pour démarrer le serveur
-
+Lancez le fichier `PetziApplication.java` pour démarrer le serveur.
 
 ### Utiliser l'API
 - **Enregistrer JSON** : Envoyez une requête POST à `http://localhost:8080/json/save` avec un corps JSON et les en-têtes appropriés.
 - **Récupérer JSON** : Envoyez une requête GET à `http://localhost:8080/json/get/{id}` pour récupérer les informations JSON enregistrées.
+- **Recevoir des notifications SSE** : Connectez-vous à `http://localhost:8080/sse` pour s'abonner aux notifications SSE.
 
 ## Contact
 - Dev : Jonathan Ngamboe
