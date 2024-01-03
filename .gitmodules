@@ -1,0 +1,3 @@
+[submodule "PetziHook"]
+	path = PetziHook
+	url = https://github.com/Jonathanngamboe/petzi
