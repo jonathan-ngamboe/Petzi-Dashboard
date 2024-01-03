@@ -29,7 +29,7 @@ public class SseService {
      */
     public void addClient(SseEmitter emitter) {
         clients.add(emitter);
-        logger.info("Added new SSE client.");
+        logger.info("Nouveau client SSE ajouté.");
     }
 
     /**
@@ -39,7 +39,7 @@ public class SseService {
      */
     public void removeClient(SseEmitter emitter) {
         clients.remove(emitter);
-        logger.info("Removed SSE client.");
+        logger.info("Client SSE supprimé.");
     }
 
     /**

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.io.IOException;
+
 /**
  * Controller pour gérer les connexions Server-Sent Events (SSE).
  * Permet d'établir des connexions avec les clients et de maintenir une liste de ces connexions.
@@ -35,6 +37,9 @@ public class SseController {
             // Ajoute le nouvel émetteur à l'ensemble des clients.
             sseService.addClient(emitter);
 
+            // Envoyer une confirmation d'abonnement
+            emitter.send("Abonnement aux notifications SSE réussi.");
+
             // Gestionnaire pour la complétion de la connexion. Retire l'émetteur de l'ensemble des clients.
             emitter.onCompletion(() -> {
                 sseService.removeClient(emitter);
@@ -54,6 +59,13 @@ public class SseController {
             });
         } catch (Exception e) {
             logger.error("Erreur lors de l'établissement d'une connexion SSE", e);
+            // En cas d'erreur lors de l'ajout du client, on informe le client de l'erreur.
+            try {
+                emitter.send("Erreur lors de l'abonnement aux notifications SSE.");
+                emitter.completeWithError(e);
+            } catch (IOException ioException) {
+                logger.error("Erreur lors de l'envoi du message d'erreur SSE", ioException);
+            }
         }
 
         // Retourne l'émetteur au client pour maintenir la connexion ouverte.
