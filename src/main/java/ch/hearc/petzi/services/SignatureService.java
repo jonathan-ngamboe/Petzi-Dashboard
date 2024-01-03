@@ -16,7 +16,7 @@ public class SignatureService {
     private static final String SECRET_KEY = "secret";
 
     public boolean isSignatureValid(String payload, String receivedSignatureHeader) {
-        logger.info("Validating signature");
+        logger.info("Validation de la signature...");
         try {
             String[] parts = receivedSignatureHeader.split(",");
             long timestamp = Long.parseLong(parts[0].split("=")[1]);
@@ -37,7 +37,7 @@ public class SignatureService {
             // Compare en utilisant une fonction de comparaison en temps constant
             return MessageDigest.isEqual(expectedSignature, receivedSignatureBytes);
         } catch (Exception e) {
-            logger.error("Error while validating signature : " + e.getMessage());
+            logger.error("Erreur lors de la validation de la signature : " + e.getMessage());
             return false;
         }
     }
