@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/../../petzi/pom.xml" />
         <option value="$PROJECT_DIR$/../../Petzi Hook/pom.xml" />
         <option value="$PROJECT_DIR$/../../PetziHook/pom.xml" />
+        <option value="$PROJECT_DIR$/../Common/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
