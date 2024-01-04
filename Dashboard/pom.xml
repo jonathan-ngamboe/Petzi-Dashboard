@@ -9,9 +9,9 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>ch.hearc</groupId> <!-- Doit correspondre au groupId du projet parent -->
+    <groupId>ch.hearc</groupId>
     <artifactId>Dashboard</artifactId>
-    <version>1.0-SNAPSHOT</version> <!-- Doit correspondre à la version du projet parent -->
+    <version>1.0-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
