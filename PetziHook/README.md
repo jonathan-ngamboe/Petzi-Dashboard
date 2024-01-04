@@ -1,32 +1,36 @@
-# Projet Petzi
+# Module PetziHook
 
 ## Description
-Petzi est un serveur Spring Boot conçu pour gérer les requêtes webhook de Petzi. Il offre des fonctionnalités pour enregistrer, récupérer et notifier en temps réel des informations JSON.
+`PetziHook` est le module du projet Petzi, dédié à la réception et au traitement des webhooks. Il enregistre les données JSON reçues et les publie sur un topic Kafka pour un traitement en temps réel.
 
-## Fonctionnalités
-- Réception et traitement des requêtes webhook avec validation de signature.
-- Stockage des données JSON reçues dans une base de données H2.
-- Récupération des données JSON via une API REST.
-- Notification en temps réel des clients via Server-Sent Events (SSE) lors de l'enregistrement de nouveaux JSON.
+## Fonctionnalités Clés
+- Validation et traitement des requêtes webhook.
+- Stockage persistant des données JSON dans la base de données H2.
+- Publication des données JSON sur un topic Kafka pour le traitement en temps réel.
 
-## Prérequis
-- Java JDK 11 ou supérieur.
-- Maven pour la gestion des dépendances et le build du projet.
+## Configuration
+- **Base de données** : Configurez `application.properties` avec les paramètres corrects pour la base de données H2.
+- **Clé secrète** : Définissez la clé secrète pour la validation de la signature dans `SignatureService.java`.
+- **Kafka** : Si nécessaire, configurez les détails du broker Kafka, le nom du topic, et d'autres paramètres relatifs à Kafka dans `application.properties`.
 
-## Installation et Configuration
-1. **Cloner le projet** : Utilisez `git clone https://github.com/Jonathanngamboe/petzi` pour cloner le projet sur votre machine locale.
-2. **Configuration de la base de données** : Assurez-vous que le fichier `application.properties` est configuré avec les paramètres corrects pour la base de données H2 ou laissez les paramètres par défaut.
-3. **Configurer la clé secrète** : Définissez la clé secrète utilisée pour la validation de la signature dans `PetziApplication.java`.
+## Démarrage
+Pour que `PetziHook` puisse communiquer avec Kafka, vous devez vous assurer que les brokers Kafka sont opérationnels et accessibles. Les fichiers Docker fournis dans le projet global doivent être utilisés pour démarrer les instances de Kafka nécessaires.
+
+1. Démarrez les services Kafka en exécutant `docker-compose up` dans le répertoire Docker à la racine du projet si ce n'est pas déjà fait
+2. Mettez à jour les fichiers de configuration de `PetziHook` pour pointer vers les brokers Kafka et les topics appropriés si nécessaire ou utilisez les valeurs par défaut.
+3. Exécutez `PetziHookApplication.java` pour lancer le module `PetziHook`. Assurez-vous que Kafka est en cours d'exécution et accessible pour que `PetziHook` fonctionne correctement.
 
 ## Utilisation
-### Démarrer le serveur
-Lancez le fichier `PetziApplication.java` pour démarrer le serveur.
+- **POST `/json/save`** : Pour enregistrer et publier les données JSON sur Kafka.
+  - Si le programme est exécuté en local, vous pouvez utiliser l'URL suivante : `http://localhost:8085/json/save`.
+- **GET `/json/get/{id}`** : Pour récupérer des données JSON spécifiques stockées dans la base de données.
+  - Si le programme est exécuté en local, vous pouvez utiliser l'URL suivante : `http://localhost:8085/json/get/{id}`.
 
-### Utiliser l'API
-- **Enregistrer JSON** : Envoyez une requête POST à `http://localhost:8080/json/save` avec un corps JSON et les en-têtes appropriés.
-- **Récupérer JSON** : Envoyez une requête GET à `http://localhost:8080/json/get/{id}` pour récupérer les informations JSON enregistrées.
-- **Recevoir des notifications SSE** : Connectez-vous à `http://localhost:8080/sse` pour s'abonner aux notifications SSE.
-
-## Contact
+## Support et Contact
+Pour toute question ou soutien technique, veuillez contacter :
 - Dev : Jonathan Ngamboe
 - E-mail : jonathan.ngamboe@he-arc.ch
+
+---
+
+Pour plus d'informations sur les autres modules et l'architecture globale du projet, veuillez consulter le [README global du projet Petzi](https://github.com/Jonathanngamboe/petzi).
