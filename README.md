@@ -10,7 +10,7 @@ Le projet est composé de plusieurs modules :
 - `Dashboard` : un tableau de bord pour la visualisation des données.
 - `Common` : une librairie partagée entre les différents modules.
 
-![Architecture Petzi](images/Architecture.png)
+![Architecture Petzi](Images/Architecture.png)
 
 ## Prérequis
 - Java JDK 21 ou supérieur.
