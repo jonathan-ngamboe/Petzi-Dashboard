@@ -27,7 +27,6 @@ public class MessageTopicListener {
             System.out.println(stats);
             // Envoie les statistiques calculées à tous les clients SSE
             sseService.sendToAllClients(stats);
-            log.info("Statistiques envoyées à tous les clients SSE");
         } catch (Exception e) {
             log.error("Erreur lors du calcul des statistiques", e);
         }

@@ -50,6 +50,7 @@ public class SseService {
     public void sendToAllClients(Object data) {
         if(clients.isEmpty()) {
             logger.info("Aucun client SSE connecté.");
+            logger.info("Statistiques non envoyées.");
             return;
         }
         synchronized (clients) {
@@ -58,6 +59,7 @@ public class SseService {
                 try {
                     // Envoi des données au client.
                     client.send(data);
+                    logger.info("Statistiques envoyées à tous les clients SSE");
                 } catch (IOException e) {
                     // En cas d'erreur, marque l'émetteur comme complété avec une erreur.
                     client.completeWithError(e);
