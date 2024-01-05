@@ -60,14 +60,16 @@ public class JsonRecordController {
             return new ResponseEntity<>("Signature invalide.", HttpStatus.BAD_REQUEST);
         }
 
-        // Enregistre le JSON
+        // Enregistre le JSON et envoie une notification SSE
         try {
             JsonRecord storage = new JsonRecord();
-            storage.setJsonValue(json);
-            jsonRecordRepository.save(storage);
 
             // Ajoute la date de création au JSON
             json = json.substring(0, json.length() - 1) + ",\"createdAt\":\"" + storage.getCreatedAt().toString() + "\"}";
+
+            // Enregistre le JSON
+            storage.setJsonValue(json);
+            jsonRecordRepository.save(storage);
 
             // Envoie une notification via Kafka
             kafkaMessageService.sendMessage(json);
