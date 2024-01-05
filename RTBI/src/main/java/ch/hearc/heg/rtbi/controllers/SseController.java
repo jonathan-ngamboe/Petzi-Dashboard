@@ -28,7 +28,7 @@ public class SseController {
      *
      * @return SseEmitter pour la nouvelle connexion client.
      */
-    @GetMapping("/sse")
+    @GetMapping("/rtbi/sse")
     public SseEmitter streamEvents() {
         SseEmitter emitter = new SseEmitter();
 
