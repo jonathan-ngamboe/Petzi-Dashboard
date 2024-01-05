@@ -36,9 +36,6 @@ public class SseController {
             // Ajoute le nouvel émetteur à l'ensemble des clients.
             sseService.addClient(emitter);
 
-            // Envoie une confirmation d'abonnement
-            emitter.send("Abonnement aux notifications SSE réussi.");
-
             // Gestionnaire pour la complétion de la connexion. Retire l'émetteur de l'ensemble des clients.
             emitter.onCompletion(() -> {
                 sseService.removeClient(emitter);
