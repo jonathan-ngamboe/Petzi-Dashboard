@@ -23,8 +23,8 @@ public class MessageTopicListener {
         log.info("Évènement reçu : \n{}", message);
         try {
             // Utilise directement le message JSON pour calculer les statistiques
-            String stats = statisticsService.calculateSalesStatistics(message);
-
+            String stats = statisticsService.updateAndRetrieveStatistics(message);
+            System.out.println(stats);
             // Envoie les statistiques calculées à tous les clients SSE
             sseService.sendToAllClients(stats);
             log.info("Statistiques envoyées à tous les clients SSE");
