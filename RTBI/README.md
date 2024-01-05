@@ -20,6 +20,7 @@ Le module `RTBI` nécessite que les brokers Kafka soient opérationnels.
 
 ## Utilisation
 Le module `RTBI` fonctionne principalement en arrière-plan, en consommant et en traitant les données de Kafka. Les logs et les alertes générés seront le principal moyen d'interaction pour les utilisateurs et les systèmes aval.
+Pour s'abonner aux données en temps réel, les clients peuvent se connecter au SSE via l'URL `http://localhost:8082/rtbi/sse`.
 
 ## Support et Contact
 En cas de questions ou pour obtenir de l'aide technique, veuillez contacter :
