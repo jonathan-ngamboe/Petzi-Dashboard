@@ -44,7 +44,7 @@ public class PetziHookClient {
      * @param statisticsService le service de statistiques.
      */
     public void triggerDataSend(StatisticsService statisticsService) {
-        String jsonResponse = restTemplate.getForObject(petziHookUrl + "/json/get/all", String.class);
+        String jsonResponse = restTemplate.getForObject(petziHookUrl + "/petzihook/json/get/all", String.class);
         if (jsonResponse != null && !jsonResponse.isEmpty()) {
             try {
                 // Convertit la réponse en une liste de chaînes JSON

@@ -21,10 +21,10 @@ Pour que `PetziHook` puisse communiquer avec Kafka, vous devez vous assurer que 
 3. Exécutez `PetziHookApplication.java` pour lancer le module `PetziHook`. Assurez-vous que Kafka est en cours d'exécution et accessible pour que `PetziHook` fonctionne correctement.
 
 ## Utilisation
-- **POST `/json/save`** : Pour enregistrer et publier les données JSON sur Kafka.
-  - Si le programme est exécuté en local, vous pouvez utiliser l'URL suivante : `http://localhost:8085/json/save`.
-- **GET `/json/get/{id}`** : Pour récupérer des données JSON spécifiques stockées dans la base de données.
-  - Si le programme est exécuté en local, vous pouvez utiliser l'URL suivante : `http://localhost:8085/json/get/{id}`.
+- **POST `/petzihook/json/save`** : Pour enregistrer et publier les données JSON sur Kafka.
+  - Si le programme est exécuté en local, vous pouvez utiliser l'URL suivante : `http://localhost:8085/petzihook/json/save`.
+- **GET `/petzihook/json/get/{id}`** : Pour récupérer des données JSON spécifiques stockées dans la base de données.
+  - Si le programme est exécuté en local, vous pouvez utiliser l'URL suivante : `http://localhost:8085/petzihook/json/get/{id}`.
 
 ## Support et Contact
 Pour toute question ou soutien technique, veuillez contacter :

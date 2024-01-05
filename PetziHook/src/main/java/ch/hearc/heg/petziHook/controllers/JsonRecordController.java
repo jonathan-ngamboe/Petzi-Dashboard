@@ -88,7 +88,7 @@ public class JsonRecordController {
      * @param id l'identifiant de l'enregistrement JSON à récupérer.
      * @return un ResponseEntity contenant le JSON ou un message d'erreur.
      */
-    @GetMapping("/json/get/{id}")
+    @GetMapping("/petzihook/json/get/{id}")
     public ResponseEntity<String> getJson(@PathVariable Long id) {
         try {
             JsonRecord storage = jsonRecordRepository.findById(id)
@@ -108,7 +108,7 @@ public class JsonRecordController {
      * Traite les requêtes GET pour récupérer tous les enregistrements JSON.
      * @return un ResponseEntity contenant la liste de tous les JSON enregistrés.
      */
-    @GetMapping("/json/get/all")
+    @GetMapping("/petzihook/json/get/all")
     public ResponseEntity<List<String>> getAllJsonRecords() {
         List<String> allJsonRecords = StreamSupport.stream(jsonRecordRepository.findAll().spliterator(), false)
                 .map(JsonRecord::getJsonValue)
