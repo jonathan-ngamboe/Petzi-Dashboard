@@ -1,13 +1,11 @@
 package ch.hearc.heg.rtbi.services;
 
-import ch.hearc.heg.petziHook.controllers.JsonRecordController;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import java.util.HashMap;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,9 +15,9 @@ public class StatisticsService {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private ConcurrentHashMap<String, Double> dailyRevenue = new ConcurrentHashMap<>();
     private ConcurrentHashMap<String, Integer> dailySalesCount = new ConcurrentHashMap<>();
-    private ConcurrentHashMap<String, Double> categoryRevenue = new ConcurrentHashMap<>();
-    private ConcurrentHashMap<String, Integer> categorySalesCount = new ConcurrentHashMap<>();
-    private ConcurrentHashMap<String, Double> customerSpending = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, Double> eventRevenue = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, Integer> eventSalesCount = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, Map<String, Object>> customerInfo = new ConcurrentHashMap<>();
 
     /**
      * Met à jour les statistiques et retourne un message formaté.
@@ -37,40 +35,42 @@ public class StatisticsService {
 
         String createdAt = root.get("createdAt").toString();
         double amount = Double.parseDouble(price.get("amount").toString());
-        String category = ticket.get("category").toString();
         String customerName = buyer.get("firstName") + " " + buyer.get("lastName");
+        String event = ticket.get("event").toString();
+        String postcode = buyer.get("postcode").toString();
 
         // Mise à jour des statistiques quotidiennes
         dailyRevenue.compute(createdAt, (date, revenue) -> revenue == null ? amount : revenue + amount);
         dailySalesCount.compute(createdAt, (date, count) -> count == null ? 1 : count + 1);
 
-        // Mise à jour des statistiques par catégorie
-        categoryRevenue.compute(category, (cat, revenue) -> revenue == null ? amount : revenue + amount);
-        categorySalesCount.compute(category, (cat, count) -> count == null ? 1 : count + 1);
+        // Mise à jour des statistiques par événement
+        eventRevenue.compute(event, (evt, revenue) -> revenue == null ? amount : revenue + amount);
+        eventSalesCount.compute(event, (evt, count) -> count == null ? 1 : count + 1);
 
         // Mise à jour des dépenses par client
-        customerSpending.compute(customerName, (name, total) -> total == null ? amount : total + amount);
+        customerInfo.compute(customerName, (name, info) -> {
+            if (info == null) {
+                info = new HashMap<>();
+                info.put("totalSpending", amount);
+                info.put("postcode", postcode);
+            } else {
+                double totalSpending = (double) info.get("totalSpending") + amount;
+                info.put("totalSpending", totalSpending);
+            }
+            return info;
+        });
 
-        return formatStatistics();
+        return formatStatisticsAsJson();
     }
 
-    private String formatStatistics() {
-        StringBuilder statsMessage = new StringBuilder("-- Statistiques des ventes --\n");
+    private String formatStatisticsAsJson() throws JsonProcessingException {
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("dailySales", dailySalesCount);
+        stats.put("dailyRevenue", dailyRevenue);
+        stats.put("eventRevenue", eventRevenue);
+        stats.put("eventSalesCount", eventSalesCount);
+        stats.put("customers", customerInfo);
 
-        statsMessage.append("Ventes et revenus quotidiens :\n");
-        dailySalesCount.forEach((date, count) ->
-                statsMessage.append(date).append(" : ").append(count)
-                        .append(" ventes, Total: ").append(dailyRevenue.get(date)).append(" CHF\n"));
-
-        statsMessage.append("Ventes et revenus par catégorie :\n");
-        categorySalesCount.forEach((cat, count) ->
-                statsMessage.append(cat).append(" : ").append(count)
-                        .append(" ventes, Total: ").append(categoryRevenue.get(cat)).append(" CHF\n"));
-
-        statsMessage.append("Dépenses totales par client :\n");
-        customerSpending.forEach((name, total) ->
-                statsMessage.append(name).append(" : ").append(total).append(" CHF\n"));
-
-        return statsMessage.toString();
+        return objectMapper.writeValueAsString(stats);
     }
 }
