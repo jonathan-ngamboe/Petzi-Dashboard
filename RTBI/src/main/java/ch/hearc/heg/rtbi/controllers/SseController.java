@@ -30,7 +30,8 @@ public class SseController {
      */
     @GetMapping("/rtbi/sse")
     public SseEmitter streamEvents() {
-        SseEmitter emitter = new SseEmitter();
+        // Timeout de 30 minutes (1800000 millisecondes)
+        SseEmitter emitter = new SseEmitter(1800000L);
 
         try {
             // Ajoute le nouvel émetteur à l'ensemble des clients.
