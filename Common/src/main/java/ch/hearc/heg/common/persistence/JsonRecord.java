@@ -17,6 +17,10 @@ public class JsonRecord {
     @Column(name = "created_at")
     private LocalDate createdAt;
 
+    public JsonRecord() {
+        this.createdAt = LocalDate.now();
+    }
+
     public LocalDate getCreatedAt() {
         return createdAt;
     }
