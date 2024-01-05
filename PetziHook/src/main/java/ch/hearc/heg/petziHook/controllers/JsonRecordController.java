@@ -63,6 +63,9 @@ public class JsonRecordController {
             storage.setJsonValue(json);
             jsonRecordRepository.save(storage);
 
+            // Ajoute la date de création au JSON
+            json = json.substring(0, json.length() - 1) + ",\"createdAt\":\"" + storage.getCreatedAt().toString() + "\"}";
+
             // Envoie une notification via Kafka
             kafkaMessageService.sendMessage(json);
 
