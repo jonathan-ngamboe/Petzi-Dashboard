@@ -39,6 +39,7 @@ public class SseService {
             String currentStats = statisticsService.getCurrentStatistics();
             if (currentStats != null && !currentStats.isEmpty()) {
                 emitter.send(currentStats);
+                System.out.println("Statistiques du cache envoyées au nouveau client SSE");
             }
         } catch (JsonProcessingException e) {
             logger.error("Erreur lors de l'envoi des statistiques actuelles", e);
@@ -77,6 +78,8 @@ public class SseService {
                     logger.info("Statistiques envoyées à tous les clients SSE");
                 } catch (IOException e) {
                     // En cas d'erreur, marque l'émetteur comme complété avec une erreur.
+                    logger.error("Erreur lors de l'envoi des statistiques", e);
+                    logger.info("Suppression du client SSE");
                     client.completeWithError(e);
                     clientsToRemove.add(client);
                 }
