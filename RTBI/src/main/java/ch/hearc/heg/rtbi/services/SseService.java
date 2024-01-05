@@ -1,8 +1,10 @@
 package ch.hearc.heg.rtbi.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
@@ -21,6 +23,8 @@ public class SseService {
 
     // Ensemble des clients connectés via SSE.
     private final Set<SseEmitter> clients = Collections.synchronizedSet(new HashSet<>());
+    @Autowired
+    private StatisticsService statisticsService;
 
     /**
      * Ajoute un nouveau client SSE à l'ensemble des clients connectés.
@@ -30,6 +34,17 @@ public class SseService {
     public void addClient(SseEmitter emitter) {
         clients.add(emitter);
         logger.info("Nouveau client SSE ajouté.");
+        // Envois les données du cache au nouveau client
+        try {
+            String currentStats = statisticsService.getCurrentStatistics();
+            if (currentStats != null && !currentStats.isEmpty()) {
+                emitter.send(currentStats);
+            }
+        } catch (JsonProcessingException e) {
+            logger.error("Erreur lors de l'envoi des statistiques actuelles", e);
+        } catch (IOException e) {
+            logger.error("Erreur lors de l'envoi des statistiques actuelles", e);
+        }
     }
 
     /**
