@@ -73,4 +73,8 @@ public class StatisticsService {
 
         return objectMapper.writeValueAsString(stats);
     }
+
+    public String getCurrentStatistics() throws JsonProcessingException {
+        return formatStatisticsAsJson();
+    }
 }
