@@ -15,6 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Contrôleur REST pour gérer les requêtes liées aux enregistrements JSON (Tickets).
@@ -97,5 +100,18 @@ public class JsonRecordController {
             logger.error("Erreur interne du serveur : ", e);
             return new ResponseEntity<>("Erreur interne du serveur : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * Traite les requêtes GET pour récupérer tous les enregistrements JSON.
+     * @return un ResponseEntity contenant la liste de tous les JSON enregistrés.
+     */
+    @GetMapping("/json/get/all")
+    public ResponseEntity<List<String>> getAllJsonRecords() {
+        List<String> allJsonRecords = StreamSupport.stream(jsonRecordRepository.findAll().spliterator(), false)
+                .map(JsonRecord::getJsonValue)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(allJsonRecords);
     }
 }
