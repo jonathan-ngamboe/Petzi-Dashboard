@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.NoSuchElementException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,8 +65,12 @@ public class JsonRecordController {
         try {
             JsonRecord storage = new JsonRecord();
 
+            // Formattage de la date
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("DD-MM-YYYY");
+            String formattedDate = storage.getCreatedAt().format(formatter);
+
             // Ajoute la date de création au JSON
-            json = json.substring(0, json.length() - 1) + ",\"createdAt\":\"" + storage.getCreatedAt().toString() + "\"}";
+            json = json.substring(0, json.length() - 1) + ",\"createdAt\":\"" + formattedDate + "\"}";
 
             // Enregistre le JSON
             storage.setJsonValue(json);
