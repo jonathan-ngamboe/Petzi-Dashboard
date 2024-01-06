@@ -4,9 +4,6 @@ import RealtimeChart from '../../charts/RealtimeChart';
 import { tailwindConfig, hexToRGB, formatValue } from '../../utils/Utils';
 
 function DashboardCard01({ dailyRevenue }) {
-  const totalSalesRef = useRef(); // Référence pour le montant total des ventes
-  const averageSalesRef = useRef(); // Référence pour la moyenne des ventes
-
   // Fonction pour transformer dailyRevenue en labels et data pour le graphique
   const getChartData = (dailyRevenue) => {
     const sortedEntries = Object.entries(dailyRevenue).sort((a, b) => {
