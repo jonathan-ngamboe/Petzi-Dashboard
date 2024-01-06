@@ -15,22 +15,10 @@ function DashboardCard01({ dailyRevenue }) {
   
     const labels = sortedEntries.map(([key]) => key);
     const data = sortedEntries.map(([, value]) => value);
-    const totalSales = data.reduce((sum, value) => sum + value, 0);
-    const averageSales = totalSales / data.length;
-  
-    if (totalSalesRef.current) {
-      totalSalesRef.current.textContent = formatValue(totalSales);
-    }
-  
-    if (averageSalesRef.current) {
-      averageSalesRef.current.textContent = formatValue(averageSales);
-    }
   
     return {
       labels,
       data,
-      totalSales,
-      averageSales
     };
   };  
 
@@ -71,18 +59,6 @@ function DashboardCard01({ dailyRevenue }) {
           <div className="text-xs text-center">Ventes réalisées aujourd'hui en temps réel</div>
         </Tooltip>
       </header>
-      <div className="px-5 py-3">
-        {/* Valeur totale des ventes */}
-        <div className="flex justify-between">
-          <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2 tabular-nums">
-            Total : <span ref={totalSalesRef}></span>
-          </div>
-          {/* Valeur moyenne des ventes */}
-          <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2 tabular-nums">
-            Moyenne : <span ref={averageSalesRef}></span>
-          </div>
-        </div>
-      </div>
       <RealtimeChart data={chartData} width={595} height={248} />
     </div>
   );
