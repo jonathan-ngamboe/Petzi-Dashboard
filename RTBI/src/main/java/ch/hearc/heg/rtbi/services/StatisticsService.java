@@ -53,9 +53,14 @@ public class StatisticsService {
                 info = new HashMap<>();
                 info.put("totalSpending", amount);
                 info.put("postcode", postcode);
+                info.put("purchaseCount", 1); // Initialise le nombre d'achats à 1
             } else {
                 double totalSpending = (double) info.get("totalSpending") + amount;
                 info.put("totalSpending", totalSpending);
+
+                // Incrémentation du nombre d'achats
+                int currentPurchaseCount = (int) info.getOrDefault("purchaseCount", 0);
+                info.put("purchaseCount", currentPurchaseCount + 1);
             }
             return info;
         });
