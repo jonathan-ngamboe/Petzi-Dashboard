@@ -66,7 +66,7 @@ public class JsonRecordController {
             JsonRecord storage = new JsonRecord();
 
             // Formattage de la date
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("DD-MM-YYYY");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
             String formattedDate = storage.getCreatedAt().format(formatter);
 
             // Ajoute la date de création au JSON
