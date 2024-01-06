@@ -28,7 +28,7 @@ npm run build
 Après lancement, le tableau de bord est accessible à l'URL indiquée dans la console. Il affichera les données en temps réel.
 
 # Crédits
-Ce Dashboard est basé sur ce [template](https://github.com/cruip/tailwind-dashboard-template/tree/main)
+Ce Dashboard est basé sur ce [template](https://github.com/cruip/tailwind-dashboard-template/tree/main).
 
 ## Support et Contact
 Pour obtenir de l'aide ou si vous avez des questions, veuillez contacter :
@@ -38,4 +38,3 @@ Pour obtenir de l'aide ou si vous avez des questions, veuillez contacter :
 ---
 
 Consultez le [README global du projet](https://github.com/Jonathanngamboe/petzi/) pour plus d'informations sur l'ensemble du projet et ses différents modules.
-```
