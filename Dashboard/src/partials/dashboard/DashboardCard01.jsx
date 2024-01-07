@@ -37,16 +37,40 @@ function DashboardCard01({ dailyRevenue }) {
       clip: 20,
     }],
   });
+  
+  const customDateStringToISO = (customDateStr) => {
+    const [datePart, timePart] = customDateStr.split(' ');
+    const [day, month, year] = datePart.split('-');
+    return `${year}-${month}-${day}T${timePart}`;
+  };
+
+  const filterLatestDateData = (revenueData) => {
+    const isoDates = Object.keys(revenueData).map(customDateStringToISO);
+    const latestDate = new Date(Math.max.apply(null, isoDates.map(isoDate => new Date(isoDate))));
+    const latestDateString = `${("0" + latestDate.getDate()).slice(-2)}-${("0" + (latestDate.getMonth() + 1)).slice(-2)}-${latestDate.getFullYear()}`;
+
+    const latestData = Object.entries(revenueData).reduce((acc, [date, value]) => {
+      const [dateStr] = date.split(' ');
+      if (dateStr === latestDateString) {
+        acc[date] = value;
+      }
+      return acc;
+    }, {});
+
+    return latestData;
+  };
 
   useEffect(() => {
     if (dailyRevenue) {
-      const { labels, data } = getChartData(dailyRevenue);
+      // Filtre pour obtenir les données de la dernière date
+      const latestData = filterLatestDateData(dailyRevenue);
+      const { labels, data } = getChartData(latestData);
       setChartData({
         labels,
         datasets: [{ ...chartData.datasets[0], data }]
       });
     }
-  }, [dailyRevenue]);  
+  }, [dailyRevenue]);
 
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
