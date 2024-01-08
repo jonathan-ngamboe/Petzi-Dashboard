@@ -26,6 +26,12 @@ Pour que `PetziHook` puisse communiquer avec Kafka, vous devez vous assurer que 
 - **GET `/petzihook/json/get/{id}`** : Pour récupérer des données JSON spécifiques stockées dans la base de données.
   - Si le programme est exécuté en local, vous pouvez utiliser l'URL suivante : `http://localhost:8085/petzihook/json/get/{id}`.
 
+### Accès à la base de données
+Pour accéder à la base de données H2, vous pouvez utiliser l'URL suivante : `http://localhost:8085/petzihook/h2-console`. Les paramètres de connexion sont configurables dans `application.properties`. Cependant, les paramètres par défaut sont les suivants :
+- **JDBC URL** : `jdbc:h2:file:./PetziHook/database`
+- **User Name** : `` (vide)
+- **Password** : `` (vide)
+
 ## Support et Contact
 Pour toute question ou soutien technique, veuillez contacter :
 - Dev : Jonathan Ngamboe
