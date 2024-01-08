@@ -43,7 +43,7 @@ public class JsonRecordController {
      * @param request la requête HTTP contenant les en-têtes et autres informations.
      * @return un ResponseEntity représentant le résultat de l'opération.
      */
-    @PostMapping("json/save")
+    @PostMapping("/petzihook/json/save")
     public ResponseEntity<String> saveJson(@RequestBody String json, HttpServletRequest request) {
         logger.info("Requête reçue");
         String petziSignature = request.getHeader("Petzi-Signature");
