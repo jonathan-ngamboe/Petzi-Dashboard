@@ -23,29 +23,7 @@ const aggregateSalesByDate = (sales) => {
   return salesAggregatedByDate;
 };
 
-const getLastThreeDaysSales = (sales) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const threeDaysAgo = new Date().setDate(today.getDate() - 3);
-  const recentSales = Object.entries(sales).filter(([date]) =>
-    new Date(date.split(' ')[0]) >= threeDaysAgo
-  );
-
-  const salesAggregatedByDate = recentSales.reduce((acc, [date, value]) => {
-    const dateOnly = date.split(' ')[0];
-    if (acc[dateOnly]) {
-      acc[dateOnly] += value;
-    } else {
-      acc[dateOnly] = value;
-    }
-    return acc;
-  }, {});
-
-  return salesAggregatedByDate;
-};
-
-const dailySalesAggregated = getLastThreeDaysSales(dailySales);
+const dailySalesAggregated = aggregateSalesByDate(dailySales);
 
   const chartData = {
     labels: Object.keys(dailySalesAggregated),
