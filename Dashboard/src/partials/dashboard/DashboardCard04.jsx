@@ -76,7 +76,6 @@ function DashboardCard04({ customerInfo }) {
                 <td className="p-2">CHF {totalSpent.toFixed(2)}</td>
                 <td className="p-2 text-center">{totalPurchases}</td>
                 <td className="p-2 text-center">CHF {averageBasketGlobal}</td>
-                <td className="p-2"></td> {/* Colonne code postal vide pour les totaux */}
               </tr>
             </tbody>
           </table>
