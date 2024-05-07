@@ -1,7 +1,7 @@
 # Projet Petzi
 
 ## Description
-Petzi est une suite d'applications conçue pour gérer les interactions entre les utilisateurs, les animaux de compagnie et les services associés. Cette suite inclut des modules pour la réception de webhooks, l'analyse de données en temps réel et la visualisation via un tableau de bord.
+Petzi est une application développée pour le traitement et la visualisation en temps réel des données de ventes de billets de concert. Permet aux gestionnaires d'événements de suivre les ventes en temps réel et d'optimiser les stratégies de marketing et de distribution.
 
 ## Architecture
 Le projet est composé de plusieurs modules :
