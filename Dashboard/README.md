@@ -1,40 +1,36 @@
-# Dashboard - Interface de suivi en temps réel
+# Dashboard – Real-Time Monitoring Interface
 
 ## Description
-Le module `Dashboard` offre une interface utilisateur réactive et moderne pour visualiser et interagir avec les données en temps réel. Ce module utilise [Vite](https://vitejs.dev/).
+The `Dashboard` module provides a modern, responsive user interface to visualize and interact with real-time data. This module is built with [Vite](https://vitejs.dev/).
 
-## Fonctionnalités Clés
-- Tableaux de bord adaptatifs avec widgets pré-codés.
-- Graphiques interactifs réalisés avec Chart.js.
-- Interface réactive pour tous les appareils et tailles d'écran.
+## Key Features
+- Adaptive dashboards with pre-coded widgets.
+- Interactive charts built with Chart.js.
+- Fully responsive interface for all devices and screen sizes.
 
-# Installation et Utilisation
+## Installation & Usage
 
-### Installation des dépendances
+### Install dependencies
 ```sh
 npm install
 ```
 
-### Compilation et rechargement à chaud pour le développement
+### Start development server with hot reload
 ```sh
 npm run dev
 ```
 
-### Compilation et minification pour la production
+### Build and minify for production
 ```sh
 npm run build
 ```
-## Utilisation
-Après lancement, le tableau de bord est accessible à l'URL indiquée dans la console. Il affichera les données en temps réel.
 
-# Crédits
-Ce Dashboard est basé sur ce [template](https://github.com/cruip/tailwind-dashboard-template/tree/main).
+## Usage
+Once the project is running, the dashboard will be accessible at the URL printed in the console. It will automatically display real-time data updates.
 
-## Support et Contact
-Pour obtenir de l'aide ou si vous avez des questions, veuillez contacter :
-- Développeur : Jonathan Ngamboe
-- Email : jonathan.ngamboe@he-arc.ch
+## Credits
+This Dashboard is based on the [Cruip Tailwind Dashboard Template](https://github.com/cruip/tailwind-dashboard-template/tree/main).
 
 ---
 
-Consultez le [README global du projet](https://github.com/Jonathanngamboe/petzi/) pour plus d'informations sur l'ensemble du projet et ses différents modules.
+Check out the [main Petzi project README](https://github.com/Jonathanngamboe/petzi/) for more information about the overall architecture and other modules.
