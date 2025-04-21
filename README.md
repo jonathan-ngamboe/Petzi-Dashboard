@@ -37,7 +37,6 @@
     - [Installation](#installation)
     - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Overview
 
@@ -219,14 +218,6 @@ Each module can be launched individually. Start them in the following order for 
    </a>
 </p>
 </details>
-
-## License
-
-Petzi-dashboard is protected under the [LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
-
-## Acknowledgments
-
-- Credit `contributors`, `inspiration`, `references`, etc.
 
 <div align="right">
 
